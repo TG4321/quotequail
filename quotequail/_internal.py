@@ -134,7 +134,6 @@ def parse_reply(line):
                     user = split_groups[-1]
                 else:
                     advanced_split = parse_date_advanced(groups[0])
-                    print('a s', advanced_split)
                     if advanced_split:
                         date = advanced_split[0]
                         user = advanced_split[1]

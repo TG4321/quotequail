@@ -17,7 +17,9 @@ REPLY_DATE_SPLIT_REGEX = re.compile(r'^(.*(:[0-9]{2}( [apAP]\.?[mM]\.?)?)), (.*)
 
 
 DATE_PATTERNS_ADVANCED = [
+    # gmail-specific date format
     re.compile(r'([A-Z][a-z]+,\s.+?\s\d{1,2},\s\d{4}.+\d{1,2}:\d{1,2}\s[A-Z]+)\s(.+<.+@.+>)'),
+    # yahoos weird date format (i guess it's nice they include the timezone though)
     re.compile(r'([^\s]+?,\s[^\s]+?\s\d{1,2},\s\d{4},\s\d{1,2}:\d{1,2}:\d{1,2}(?:\s[apAP].[mM].\s[a-zA-Z]{1,3})?),\s(.*?<.*?@.*?>)')
 ]
 

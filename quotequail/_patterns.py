@@ -15,6 +15,12 @@ REPLY_PATTERNS = [
 
 REPLY_DATE_SPLIT_REGEX = re.compile(r'^(.*(:[0-9]{2}( [apAP]\.?[mM]\.?)?)), (.*)?$')
 
+
+DATE_PATTERNS_ADVANCED = [
+    re.compile(r'([A-Z][a-z]+,\s.+?\s\d{1,2},\s\d{4}.+\d{1,2}:\d{1,2}\s[A-Z]+)\s(.+<.+@.+>)'),
+    re.compile(r'([^\s]+?,\s[^\s]+?\s\d{1,2},\s\d{4},\s\d{1,2}:\d{1,2}:\d{1,2}(?:\s[apAP].[mM].\s[a-zA-Z]{1,3})?),\s(.*?<.*?@.*?>)')
+]
+
 FORWARD_MESSAGES = [
     # apple mail forward
     'Begin forwarded message', 'Anfang der weitergeleiteten E-Mail',

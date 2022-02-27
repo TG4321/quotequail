@@ -1,5 +1,6 @@
 import re
-from ._patterns import COMPILED_PATTERNS, COMPILED_PATTERN_MAP, HEADER_RE, HEADER_MAP, REPLY_DATE_SPLIT_REGEX, STRIP_SPACE_CHARS
+from ._patterns import COMPILED_PATTERNS, COMPILED_PATTERN_MAP, HEADER_RE, HEADER_MAP, \
+    REPLY_DATE_SPLIT_REGEX, STRIP_SPACE_CHARS, DATE_PATTERNS_ADVANCED
 
 """
 Internal methods. For max_wrap_lines, min_header_lines, min_quoted_lines
@@ -99,6 +100,15 @@ def extract_headers(lines, max_wrap_lines):
 
     return hdrs, lines_processed
 
+# Friday, February 25, 2022, 08:52:06 p.m. PST, Thomas Rubbert <thomas.rubbert@gmail.com>
+def parse_date_advanced(line):
+    for pattern in DATE_PATTERNS_ADVANCED:
+        match = pattern.match(line)
+        if match:
+            return match.groups()
+
+    return None
+
 def parse_reply(line):
     """
     Parses the given reply line ("On DATE, USER wrote:") and returns a
@@ -123,10 +133,16 @@ def parse_reply(line):
                     date = split_groups[0]
                     user = split_groups[-1]
                 else:
-                    # Try a simple comma split
-                    split = groups[0].rsplit(',', 1)
-                    if len(split) == 2:
-                        date, user = split
+                    advanced_split = parse_date_advanced(groups[0])
+                    print('a s', advanced_split)
+                    if advanced_split:
+                        date = advanced_split[0]
+                        user = advanced_split[1]
+                    else:
+                        # Try a simple comma split
+                        split = groups[0].rsplit(',', 1)
+                        if len(split) == 2:
+                            date, user = split
 
     if date:
         date = date.strip()
